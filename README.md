@@ -1,5 +1,7 @@
 # Teste Técnico QA – Blog do Agi (Playwright)
 
+![Playwright Tests](https://github.com/Marcelo-Meireles/marcelomeireles-teste-tecnico-qa-blog-agi/actions/workflows/playwright.yml/badge.svg)
+
 Automação end-to-end do **Blog do Agi** utilizando Playwright + TypeScript, aplicando Page Object Model (POM), boas práticas de estrutura e execução em múltiplos browsers (Chromium, Firefox, WebKit).
 
 Repositório criado para o teste técnico de QA, focado na funcionalidade de **pesquisa de artigos (lupa)** e **navegação por paginação** do Blog do Agi.
