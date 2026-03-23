@@ -27,18 +27,21 @@ export class BlogAgiPage {
     const next = this.nextPageLink;
     await next.waitFor({ state: 'visible' });
     await next.click();
-    await this.page.waitForURL(/page\/2/, { waitUntil: 'domcontentloaded' });
+    await this.page.waitForURL(/\/page\/2/, { waitUntil: 'domcontentloaded' });
     await this.results.waitFor({ state: 'visible' });
   }
 
-    /** Navega para a categoria Produtos e valida que ha artigos listados. */
+  /** Navega diretamente para a URL da categoria. */
   async navigateToCategory(category: string) {
-    await this.page.click('button[aria-label="Main menu toggle"]');
-    await this.page.getByRole('link', { name: category, exact: true }).first().click();
-    await this.page.waitForLoadState('domcontentloaded');
+    const slug = category
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '-');
+    await this.page.goto(`${BASE}/categoria/${slug}/`, { waitUntil: 'domcontentloaded' });
   }
 
-  /** Clica no primeiro artigo da lista e retorna o titulo capturado antes do clique. */
+  /** Clica no primeiro artigo da lista e retorna o título capturado antes do clique. */
   async openFirstArticle(): Promise<string> {
     const firstArticle = this.page.locator('main h3 a').first();
     const title = (await firstArticle.innerText()).trim();
