@@ -31,14 +31,14 @@ export class BlogAgiPage {
     await this.results.waitFor({ state: 'visible' });
   }
 
-  /** Navega diretamente para a URL da categoria. */
+  /** Navega diretamente para a URL da categoria (ex: Produtos -> /produtos/). */
   async navigateToCategory(category: string) {
     const slug = category
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/\s+/g, '-');
-    await this.page.goto(`${BASE}/categoria/${slug}/`, { waitUntil: 'domcontentloaded' });
+    await this.page.goto(`${BASE}/${slug}/`, { waitUntil: 'domcontentloaded' });
   }
 
   /** Clica no primeiro artigo da lista e retorna o título capturado antes do clique. */
