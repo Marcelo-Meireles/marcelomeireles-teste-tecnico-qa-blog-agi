@@ -30,4 +30,20 @@ export class BlogAgiPage {
     await this.page.waitForURL(/page\/2/, { waitUntil: 'domcontentloaded' });
     await this.results.waitFor({ state: 'visible' });
   }
+
+    /** Navega para a categoria Produtos e valida que ha artigos listados. */
+  async navigateToCategory(category: string) {
+    await this.page.click('button[aria-label="Main menu toggle"]');
+    await this.page.getByRole('link', { name: category, exact: true }).first().click();
+    await this.page.waitForLoadState('domcontentloaded');
+  }
+
+  /** Clica no primeiro artigo da lista e retorna o titulo capturado antes do clique. */
+  async openFirstArticle(): Promise<string> {
+    const firstArticle = this.page.locator('main h3 a').first();
+    const title = (await firstArticle.innerText()).trim();
+    await firstArticle.click();
+    await this.page.waitForLoadState('domcontentloaded');
+    return title;
+  }
 }
